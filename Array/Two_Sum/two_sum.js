@@ -17,16 +17,42 @@
 
 // Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 
-const twoSum = (nums, target) => {
-  const previousValues = {};
-  for (let i = 0; i < nums.length; i++) {
-    const currentNumber = nums[i];
-    const neededValue = target - currentNumber;
-    const index2 = previousValues[neededValue];
-    if (index2 != null) {
-      return [index2, i];
-    } else {
-      previousValues[currentNumber] = i;
-    }
-  }
-};
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+
+ nums = [1, 3, 7, 9, 2];
+ target = 11;
+ 
+ const findTwoSum1 = function (nums, target) {
+   for (let p1 = 0; p1 < nums.length; p1++) {
+     const numberToFind = target - nums[p1];
+     for (p2 = p1 + 1; p2 < nums.length; p2++) {
+       if (numberToFind === nums[p2]) {
+         return [p1, p2];
+       }
+     }
+   }
+   return null;
+ };
+ 
+ //! Time Complexity: O(N2) - need find a solution how to optimize
+ //! Space Complexity: O(1) - no problem
+ 
+ //* Optimizing solution:
+ const findTwoSum2 = function (nums, target) {
+   const numsMap = {};
+   for (let p = 0; p < nums.length; p++) {
+     const currentMapVal = numsMap[nums[p]];
+     if (currentMapVal >= 0) { 
+       return [currentMapVal, p];
+     } else {
+       const numberToFind = target - nums[p];
+       numsMap[numberToFind] = p;
+     }
+   }
+   return null;
+ };
+ 
